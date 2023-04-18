@@ -1,2 +1,2 @@
 # Cryptography
-UIT Cryptography. Archive for what I have learned.
+Mainly C++, Python. Archive for what I have learned.
