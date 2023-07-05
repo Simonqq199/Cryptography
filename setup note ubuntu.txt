@@ -1,0 +1,165 @@
+Workdir=charm (edit */charm to your path)
+Install dir= charm05
+1. gcc, g++, compiler 
+
+	sudo apt-get install build-essential
+	sudo apt-get install libgmp3-dev
+	
+2. Python 3.7
+Prerequires:
+	sudo apt-get install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev wget libbz2-dev
+	cd */charm
+Download and compile:
+	wget https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tgz
+	tar -xvzf Python-3.7.0.tgz
+	cd Python-3.7.0
+	./configure --enable-optimizations --prefix="/home/ngoctu/Desktop/charm05"
+	make -j 8
+	sudo make altinstall
+	
+
+3. gmp library
+Prerequires: m4
+	sudo apt-get install m4
+Download and compile:
+	cd */charm
+	wget https://ftp.gnu.org/gnu/gmp/gmp-5.1.3.tar.gz
+	tar -xvzf gmp-5.1.3.tar.gz
+	cd gmp-5.1.3
+	./configure --prefix="/home/ngoctu/Desktop/charm05"
+	make
+	sudo make install
+	make check
+
+Note: Check the result for sure at ./configure step:
+-----------------------------------------
+  Version:           GNU MP 5.1.3
+  Host type:         coreisbr-unknown-linux-gnu
+  ABI:               64
+  Install prefix:    "/home/ngoctu/Desktop/charm05"
+  Compiler:          gcc
+  Static libraries:  yes
+  Shared libraries:  yes"
+ -----------------------------------------
+
+ 
+ 4. PBC library
+ Guidelines
+ https://crypto.stanford.edu/pbc/manual.pdf
+ Prerequires: flex, bison
+	 sudo apt-get install flex bison
+	 
+ Download and compile:
+ 	cd */charm
+	 wget https://crypto.stanford.edu/pbc/files/pbc-0.5.14.tar.gz
+	 tar -xvzf pbc-0.5.14.tar.gz
+	 cd pbc-0.5.14
+	 sudo ./configure --prefix="/home/ngoctu/Desktop/charm05" CFLAGS="-I/home/ngoctu/Desktop/charm05/include" LDFLAGS="-L/home/ngoctu/Desktop/charm05/lib"
+	sudo make
+	sudo make install
+
+Note: Check the resulr for sure at ./configure step:
+-------------------------------------------------------
+Tue May 30 12:23:51 +07 2023
+host info:        x86_64-unknown-linux-gnu
+optimized build:  no
+compiler (CC):    gcc
+LDFLAGS:          -L/home/ngoctu/Desktop/charm05/lib
+CPPFLAGS:         
+CFLAGS:            -Wall -W -Wfloat-equal -Wpointer-arith -Wcast-align -Wstrict-prototypes -Wredundant-decls -Wendif-labels -Wshadow -pipe -ffast-math -U__STRICT_ANSI__ -std=gnu99 -fomit-frame-pointer -O3
+LEX:              flex
+AM_LFLAGS:        
+LFLAGS:           
+YACC:             bison -y
+AM_YFLAGS:        
+YFLAGS:           
+-----------------------------------------
+
+5. Opensll library
+ Download and compile:
+ 	cd */charm
+	wget https://www.openssl.org/source/openssl-1.1.1t.tar.gz
+	tar -xvzf openssl-1.1.1t.tar.gz
+	cd openssl-1.1.1t
+	./config --prefix="/home/ngoctu/Desktop/charm05" enable-ec_nistp_64_gcc_128
+	sudo make -j 8
+	sudo make test -j 8
+	sudo make install
+	
+Note: Check the resulr for sure at ./config step:
+**********************************************************************
+***                                                                ***
+***   OpenSSL has been successfully configured                     ***
+***                                                                ***
+***   If you encounter a problem while building, please open an    ***
+***   issue on GitHub <https://github.com/openssl/openssl/issues>  ***
+***   and include the output from the following command:           ***
+***                                                                ***
+***       perl configdata.pm --dump                                ***
+***                                                                ***
+***   (If you are new to OpenSSL, you might want to consult the    ***
+***   'Troubleshooting' section in the INSTALL file first)         ***
+***                                                                ***
+**********************************************************************
+
+ 6. Charm library
+ References
+ https://www.cs.purdue.edu/homes/clg/files/Charm.pdf
+ https://pan.baidu.com/share/init?surl=4FLFP7jMWdZ337DcrGf_lQ
+ pass: zhhl
+ https://jhuisi.github.io/charm/install_source.html
+ 
+ Prerequires:
+	sudo apt-get install python3-sphinx
+	sudo apt-get install git
+	sudo apt-get install python3-dev
+
+ Download and compile:
+	 cd */charm
+	 git clone https://github.com/JHUISI/charm
+	 cd charm
+	 ./configure.sh --help
+	 python3-dev
+
+	./configure.sh --python="/home/ngoctu/Desktop/charm05/bin/python3.7m" --prefix="/home/ngoctu/Desktop/charm05" --enable-docs --static --extra-ldflags="-L/home/ngoctu/Desktop/charm05/lib" --extra-cflags="-I/home/ngoctu/Desktop/charm05/include"
+	
+	sudo make
+	sudo make install
+	sudo ldconfig
+	sudo make test --include-dir="/home/ngoctu/Desktop/charm05/include" LD_LIBRARY_PATH="/home/ngoctu/Desktop/charm05/lib"
+
+Note: Check the result for sure at ./configure.sh step
+------------------------------                
+Install prefix    /home/ngoctu/Desktop/charm05
+data directory    /home/ngoctu/Desktop/charm05/share/charm
+binary directory  /home/ngoctu/Desktop/charm05/bin
+library directory /home/ngoctu/Desktop/charm05/lib
+config directory  /home/ngoctu/Desktop/charm05/etc
+Source path       /home/ngoctu/Desktop/charmsetup/charm
+CFLAGS            -O2 -g 
+CHARM_CFLAGS       -m64 -Wall -Wundef -Wwrite-strings -Wmissing-prototypes -I/home/ngoctu/Desktop/charm05/include  -fstack-protector-all -Wendif-labels -Wmissing-include-dirs -Wempty-body -Wnested-externs -Wformat-security -Wformat-y2k -Winit-self -Wignored-qualifiers -Wold-style-declaration -Wold-style-definition -Wtype-limits
+LDFLAGS           -m64 -static -L/home/ngoctu/Desktop/charm05/lib 
+make              make
+python            /home/ngoctu/Desktop/charm05/bin/python3.7m
+python-config     /usr/bin/python3-config
+build_ext options build_ext 
+install           install
+host CPU          x86_64
+wget              /usr/bin/wget
+gprof enabled     no
+profiler          no
+static build      yes
+-Werror enabled   no
+integer module    yes
+ecc module        yes
+pairing module    yes
+disable benchmark no
+libm found        yes
+libgmp found      yes
+libpbc found      yes
+libcrypto found   yes
+Documentation     yes
+sphinx path       /usr/bin/sphinx-build
+
+--------------------------------------------------------
+
